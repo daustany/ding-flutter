@@ -7,8 +7,8 @@
   "login_error_fill_fields": "Udfyld venligst alle felterne",
   "login_end": "------------------------------------------------------------------------------------",
 
+  "connection_timeout": "Connection timeout! try again.",
   "home_start": "Ding Ontime!",
-  "error": "Error in communicating...",
+  "error": "Error!",
   "choose_language": "Choose language"
-
 }

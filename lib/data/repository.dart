@@ -18,7 +18,10 @@ class Repository {
 
   // Login:---------------------------------------------------------------------
   Future<ResponseBodyModel> login(String email, String password) async {
-    return await _tokenAuth.authenticate(email, password);
+    //return await _tokenAuth.authenticate(email, password);
+    return await _tokenAuth.authenticate(email, password).then((result) {
+      return result;
+    }).catchError((error) => throw Exception(error.message));
   }
 
   Future<void> saveIsLoggedIn(bool value) =>

@@ -17,19 +17,19 @@ class DioClient {
     CancelToken? cancelToken,
     ProgressCallback? onReceiveProgress,
   }) async {
-    try {
-      final Response response = await _dio.get(
-        uri,
-        queryParameters: queryParameters,
-        options: options,
-        cancelToken: cancelToken,
-        onReceiveProgress: onReceiveProgress,
-      );
-      return response.data;
-    } catch (e) {
-      print(e.toString());
-      throw e;
-    }
+    // try {
+    final Response response = await _dio.get(
+      uri,
+      queryParameters: queryParameters,
+      options: options,
+      cancelToken: cancelToken,
+      onReceiveProgress: onReceiveProgress,
+    );
+    return response.data;
+    // } catch (e) {
+    //   print(e.toString());
+    //   throw e;
+    // }
   }
 
   // Post:----------------------------------------------------------------------
@@ -42,20 +42,20 @@ class DioClient {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    try {
-      final Response response = await _dio.post(
-        uri,
-        data: data,
-        queryParameters: queryParameters,
-        options: options,
-        cancelToken: cancelToken,
-        onSendProgress: onSendProgress,
-        onReceiveProgress: onReceiveProgress,
-      );
-      return response.data;
-    } catch (e) {
-      throw e;
-    }
+    // try {
+    final Response response = await _dio.post(
+      uri,
+      data: data,
+      queryParameters: queryParameters,
+      options: options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+    return response.data;
+    // } catch (e) {
+    //   throw e;
+    // }
   }
 
   // Put:-----------------------------------------------------------------------

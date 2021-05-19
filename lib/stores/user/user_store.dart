@@ -1,5 +1,6 @@
 import 'package:ding/models/responsebody_model.dart';
 import 'package:ding/stores/error/error_store.dart';
+import 'package:ding/utils/dio/dio_error_util.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
 
@@ -66,17 +67,14 @@ abstract class _UserStore with Store {
   Future login(String email, String password) async {
     final future = _repository.login(email, password);
     loginFuture = ObservableFuture(future);
-
     await future.then((_response) async {
       if ((_response.success ?? false)) {
         _repository.saveIsLoggedIn(true);
-
         _repository.saveAuthToken(
           _response.result?.accessToken,
           _response.result?.encryptedAccessToken,
           _response.result?.refreshToken,
         );
-
         this.isLoggedIn = true;
         this.success = true;
       } else {
@@ -86,22 +84,35 @@ abstract class _UserStore with Store {
         _repository.saveIsLoggedIn(false);
         _repository.removeAuthToken();
       }
+    }).catchError((error) {
+      // errorStore.errorMessage = DioErrorUtil.handleError(error);
+      this.isLoggedIn = false;
+      this.success = false;
+      errorStore.errorMessage = error.message;
+      throw Exception(error.message);
     });
 
+    // final future = _repository.login(email, password);
     // loginFuture = ObservableFuture(future);
-    // await future.then((value) async {
-    //   if (value) {
+    // await future.then((_response) async {
+    //   if ((_response.success ?? false)) {
     //     _repository.saveIsLoggedIn(true);
+    //     _repository.saveAuthToken(
+    //       _response.result?.accessToken,
+    //       _response.result?.encryptedAccessToken,
+    //       _response.result?.refreshToken,
+    //     );
     //     this.isLoggedIn = true;
     //     this.success = true;
     //   } else {
-    //     print('failed to login');
+    //     this.isLoggedIn = false;
+    //     this.success = false;
+    //     this.errorMessage = _response.error?.message;
+    //     _repository.saveIsLoggedIn(false);
+    //     _repository.removeAuthToken();
     //   }
-    // }).catchError((e) {
-    //   print(e);
-    //   this.isLoggedIn = false;
-    //   this.success = false;
-    //   throw e;
+    // }).catchError((error) {
+    //   errorStore.errorMessage = DioErrorUtil.handleError(error);
     // });
   }
 

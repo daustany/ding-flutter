@@ -76,9 +76,9 @@ class _LoginScreenState extends State<LoginScreen> {
               : Center(child: _buildRightSide()),
           Observer(
             builder: (context) {
-              return _userStore.success
+              return _store.success
                   ? navigate(context)
-                  : _showErrorMessage(_userStore.errorMessage ?? '');
+                  : _showErrorMessage(_store.errorStore.errorMessage);
             },
           ),
           Observer(
@@ -183,17 +183,27 @@ class _LoginScreenState extends State<LoginScreen> {
       onPressed: () async {
         if (_store.canLogin) {
           DeviceUtils.hideKeyboard(context);
-
-          _userStore.login(_store.userEmail, _store.password);
-          //     .then((value) async {
-          //   if (_userStore.success) {
-          //   } else
-          //     _showErrorMessage(_userStore.errorMessage ?? "");
-          // });
-        } else {
-          _showErrorMessage(
-            AppLocalizations.of(context).translate('login_error_fill_fields'),
+          _store.loading = true;
+          _userStore.login(_store.userEmail, _store.password).then(
+            (value) async {
+              _store.loading = false;
+              if (_userStore.success) {
+                navigate(context);
+              } else
+                _showErrorMessage(_userStore.errorMessage ?? "");
+            },
+          ).catchError(
+            (error) {
+              if (error != null) {
+                _store.loading = false;
+                _showErrorMessage(
+                  AppLocalizations.of(context).translate(error.message),
+                );
+              }
+            },
           );
+        } else {
+          _showErrorMessage('Please fill in all fields');
         }
       },
     );
