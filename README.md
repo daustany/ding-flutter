@@ -1,4 +1,4 @@
-# ding Project
+# Ding Ontime Project
 
 A ding project created in flutter using MobX and Provider. ding supports both web and mobile, clone the appropriate branches mentioned below:
 
