@@ -1,15 +1,17 @@
 {
   "login_start": "در زیر لیستی از رشته ها برای ورود وجود دارد",
-  "login_et_user_email": "ایمیل خود را وارد کنید",
+  "login_tenant_name": "نام انگلیسی شرکت خود را وارد کنید",
+  "login_et_username": "نام کاربری، ایمیل یا موبایل",
   "login_et_user_password": "رمز عبور خود را وارد کنید",
   "login_btn_forgot_password": "رمز را فراموش کردید؟",
   "login_btn_sign_in": "ورود",
   "login_error_fill_fields": "لطفا تمام فیلدها را پر کنید",
-  "login_end": "------------------------------------------------------------------------------------",
+  "fill_all_field": "لطفا  تمام فیلدها را پر کنید",
 
   "connection_timeout": "خطا در برقراری ارتباط! دوباره تلاش کنید.",
   "error": "خطا !",
   "home_start": "دینگ !",
-  "choose_language": "انتخاب زبان"
+  "choose_language": "انتخاب زبان",
+  "success": "موفق"
 
 }

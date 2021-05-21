@@ -2,6 +2,7 @@ class Preferences {
   Preferences._();
 
   static const String is_logged_in = "isLoggedIn";
+  static const String tanantId = "tanantId";
   static const String auth_token = "authToken";
   static const String encrypted_auth_token = "encryptedAccessToken";
   static const String refresh_token = "refreshToken";

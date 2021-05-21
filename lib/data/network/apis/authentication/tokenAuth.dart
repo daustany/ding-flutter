@@ -4,7 +4,6 @@ import 'package:ding/data/network/constants/endpoints.dart';
 import 'package:ding/data/network/dio_client.dart';
 import 'package:ding/models/responsebody_model.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
 
 @Singleton()
@@ -18,7 +17,7 @@ class TokenAuth {
 
   /// Returns list of post in response
   Future<ResponseBodyModel> authenticate(
-      String userNameOrEmailAddress, password) async {
+      String tenant, String userNameOrEmailAddress, password) async {
     try {
       final res = await _dioClient.post(
         Endpoints.authenticate,

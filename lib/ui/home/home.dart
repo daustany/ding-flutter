@@ -1,15 +1,18 @@
+import 'dart:ui';
+
 import 'package:another_flushbar/flushbar_helper.dart';
 import 'package:ding/data/sharedpref/constants/preferences.dart';
 import 'package:ding/utils/routes/routes.dart';
 import 'package:ding/stores/language/language_store.dart';
 import 'package:ding/stores/theme/theme_store.dart';
 import 'package:ding/utils/locale/app_localization.dart';
-import 'package:ding/widgets/progress_indicator_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:material_dialog/material_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wifi_flutter/wifi_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -20,10 +23,33 @@ class _HomeScreenState extends State<HomeScreen> {
   //stores:---------------------------------------------------------------------
   late ThemeStore _themeStore;
   late LanguageStore _languageStore;
+  List<Widget> _availableNetworks = [];
 
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance!.addPostFrameCallback((timings) {
+      getAvailableNetworks();
+    });
+  }
+
+  getAvailableNetworks() async {
+    await WifiFlutter.promptPermissions();
+
+    final networks = await WifiFlutter.wifiNetworks;
+    setState(() {
+      _availableNetworks = networks
+          .map((network) => Text(
+              "Ssid ${network.ssid} - Strength ${network.rssi} - Secure ${network.isSecure}"))
+          .toList();
+    });
+    if (_availableNetworks.length == 0) {
+      Future.delayed(const Duration(seconds: 5), () => getAvailableNetworks());
+    }
+
+    //AndroidWifi
+    print(_availableNetworks);
   }
 
   @override
@@ -123,6 +149,20 @@ class _HomeScreenState extends State<HomeScreen> {
         FlushbarHelper.createError(
           message: message,
           title: AppLocalizations.of(context).translate('error'),
+          duration: Duration(seconds: 3),
+        )..show(context);
+      }
+    });
+
+    return SizedBox.shrink();
+  }
+
+  _showSuccessMessage(String message) {
+    Future.delayed(Duration(milliseconds: 0), () {
+      if (message.isNotEmpty) {
+        FlushbarHelper.createSuccess(
+          message: message,
+          title: AppLocalizations.of(context).translate('success'),
           duration: Duration(seconds: 3),
         )..show(context);
       }

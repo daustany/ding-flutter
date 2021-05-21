@@ -18,8 +18,13 @@ class SharedPreferenceHelper {
     return _sharedPreference.getString(Preferences.auth_token);
   }
 
-  Future<bool> saveAuthToken(String? authToken, String? encryptedAccessToken,
-      String? refreshToken) async {
+  Future<bool> saveAuthToken(
+    String? tanantId,
+    String? authToken,
+    String? encryptedAccessToken,
+    String? refreshToken,
+  ) async {
+    _sharedPreference.setString(Preferences.tanantId, tanantId ?? '');
     _sharedPreference.setString(Preferences.auth_token, authToken ?? '');
     _sharedPreference.setString(
         Preferences.encrypted_auth_token, encryptedAccessToken ?? '');
@@ -28,7 +33,10 @@ class SharedPreferenceHelper {
   }
 
   Future<bool> removeAuthToken() async {
-    return _sharedPreference.remove(Preferences.auth_token);
+    _sharedPreference.remove(Preferences.tanantId);
+    _sharedPreference.remove(Preferences.auth_token);
+    _sharedPreference.remove(Preferences.encrypted_auth_token);
+    return _sharedPreference.remove(Preferences.refresh_token);
   }
 
   // Login:---------------------------------------------------------------------

@@ -17,9 +17,14 @@ class Repository {
   Repository(this._tokenAuth, this._sharedPrefsHelper);
 
   // Login:---------------------------------------------------------------------
-  Future<ResponseBodyModel> login(String email, String password) async {
-    //return await _tokenAuth.authenticate(email, password);
-    return await _tokenAuth.authenticate(email, password).then((result) {
+  Future<ResponseBodyModel> login(
+    String tenant,
+    String username,
+    String password,
+  ) async {
+    return await _tokenAuth
+        .authenticate(tenant, username, password)
+        .then((result) {
       return result;
     }).catchError((error) => throw Exception(error.message));
   }
@@ -31,10 +36,18 @@ class Repository {
     return _sharedPrefsHelper.authToken;
   }
 
-  Future<void> saveAuthToken(String? authToken, String? encryptedAccessToken,
-          String? refreshToken) =>
+  Future<void> saveAuthToken(
+    String? tanantId,
+    String? authToken,
+    String? encryptedAccessToken,
+    String? refreshToken,
+  ) =>
       _sharedPrefsHelper.saveAuthToken(
-          authToken, encryptedAccessToken, refreshToken);
+        tanantId,
+        authToken,
+        encryptedAccessToken,
+        refreshToken,
+      );
 
   Future<bool> removeAuthToken() {
     return _sharedPrefsHelper.removeAuthToken();

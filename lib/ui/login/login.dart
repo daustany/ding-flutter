@@ -24,7 +24,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   //text controllers:-----------------------------------------------------------
-  TextEditingController _userEmailController = TextEditingController();
+  TextEditingController _tenantNameController = TextEditingController();
+  TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
   //stores:---------------------------------------------------------------------
@@ -84,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Observer(
             builder: (context) {
               return Visibility(
-                visible: _store.loading,
+                visible: _userStore.loading,
                 child: CustomProgressIndicatorWidget(),
               );
             },
@@ -105,6 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
           children: <Widget>[
             AppIconWidget(image: 'assets/icons/ic_appicon.png'),
             SizedBox(height: 50.0),
+            _buildTenantIdField(),
             _buildUserIdField(),
             _buildPasswordField(),
             _buildForgotPasswordButton(),
@@ -115,24 +117,48 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildUserIdField() {
+  Widget _buildTenantIdField() {
     return Observer(
       builder: (context) {
         return TextFieldWidget(
-          hint: AppLocalizations.of(context).translate('login_et_user_email'),
-          inputType: TextInputType.emailAddress,
-          icon: Icons.person,
+          hint: AppLocalizations.of(context).translate('login_tenant_name'),
+          inputType: TextInputType.text,
+          icon: Icons.location_city,
           iconColor: _themeStore.darkMode ? Colors.white70 : Colors.black54,
-          textController: _userEmailController,
+          textController: _tenantNameController,
           inputAction: TextInputAction.next,
           autoFocus: false,
           onChanged: (value) {
-            _store.setUserId(_userEmailController.text);
+            _userStore.setTenant(_tenantNameController.text);
           },
           onFieldSubmitted: (value) {
             FocusScope.of(context).requestFocus(_passwordFocusNode);
           },
-          errorText: _store.formErrorStore.userEmail,
+          errorText: _userStore.userErrorStore.tenant,
+        );
+      },
+    );
+  }
+
+  Widget _buildUserIdField() {
+    return Observer(
+      builder: (context) {
+        return TextFieldWidget(
+          hint: AppLocalizations.of(context).translate('login_et_username'),
+          inputType: TextInputType.text,
+          padding: EdgeInsets.only(top: 16.0),
+          icon: Icons.person,
+          iconColor: _themeStore.darkMode ? Colors.white70 : Colors.black54,
+          textController: _usernameController,
+          inputAction: TextInputAction.next,
+          autoFocus: false,
+          onChanged: (value) {
+            _userStore.setUserId(_usernameController.text);
+          },
+          onFieldSubmitted: (value) {
+            FocusScope.of(context).requestFocus(_passwordFocusNode);
+          },
+          errorText: _userStore.userErrorStore.username,
         );
       },
     );
@@ -150,9 +176,9 @@ class _LoginScreenState extends State<LoginScreen> {
           iconColor: _themeStore.darkMode ? Colors.white70 : Colors.black54,
           textController: _passwordController,
           focusNode: _passwordFocusNode,
-          errorText: _store.formErrorStore.password,
+          errorText: _userStore.userErrorStore.password,
           onChanged: (value) {
-            _store.setPassword(_passwordController.text);
+            _userStore.setPassword(_passwordController.text);
           },
         );
       },
@@ -181,12 +207,15 @@ class _LoginScreenState extends State<LoginScreen> {
       buttonColor: Colors.teal,
       textColor: Colors.white,
       onPressed: () async {
-        if (_store.canLogin) {
+        if (_userStore.canLogin) {
           DeviceUtils.hideKeyboard(context);
-          _store.loading = true;
-          _userStore.login(_store.userEmail, _store.password).then(
+          _userStore.loading = true;
+          _userStore
+              .login(
+                  _userStore.tenant, _userStore.username, _userStore.password)
+              .then(
             (value) async {
-              _store.loading = false;
+              _userStore.loading = false;
               if (_userStore.success) {
                 navigate(context);
               } else
@@ -195,7 +224,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ).catchError(
             (error) {
               if (error != null) {
-                _store.loading = false;
+                _userStore.loading = false;
                 _showErrorMessage(
                   AppLocalizations.of(context).translate(error.message),
                 );
@@ -203,7 +232,8 @@ class _LoginScreenState extends State<LoginScreen> {
             },
           );
         } else {
-          _showErrorMessage('Please fill in all fields');
+          _showErrorMessage(
+              AppLocalizations.of(context).translate('fill_all_field'));
         }
       },
     );
@@ -243,7 +273,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void dispose() {
     // Clean up the controller when the Widget is removed from the Widget tree
-    _userEmailController.dispose();
+    _tenantNameController.dispose();
+    _usernameController.dispose();
     _passwordController.dispose();
     _passwordFocusNode.dispose();
     super.dispose();

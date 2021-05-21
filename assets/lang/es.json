@@ -1,14 +1,16 @@
 {
   "login_start": "Below are list of strings for login es ",
-  "login_et_user_email": "Ingrese el correo electrónico del usuario",
+  "login_tenant_name": "Enter your company name",
+  "login_et_username": "Username, email or phone number",
   "login_et_user_password": "Introducir la contraseña",
   "login_btn_forgot_password": "¿Se te olvidó tu contraseña",
   "login_btn_sign_in": "Registrarse",
   "login_error_fill_fields": "Por favor complete todos los campos e",
-  "login_end": "------------------------------------------------------------------------------------",
+  "fill_all_field": "Fill in all field please",
 
   "connection_timeout": "Connection timeout! try again.",
   "home_start": "Ding Ontime!",
   "error": "Error!",
-  "choose_language": "Choose language"
+  "choose_language": "Choose language",
+  "success": "Successful"
 }
