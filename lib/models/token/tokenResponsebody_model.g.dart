@@ -1,16 +1,17 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'responsebody_model.dart';
+part of 'tokenResponsebody_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ResponseBodyModel _$ResponseBodyModelFromJson(Map<String, dynamic> json) {
-  return ResponseBodyModel(
+TokenResponseBodyModel _$TokenResponseBodyModelFromJson(
+    Map<String, dynamic> json) {
+  return TokenResponseBodyModel(
     result: json['result'] == null
         ? null
-        : ResultResponseModel.fromJson(json['result'] as Map<String, dynamic>),
+        : TokenResponseModel.fromJson(json['result'] as Map<String, dynamic>),
     targetUrl: json['targetUrl'],
     success: json['success'] as bool?,
     error: json['error'] == null
@@ -21,7 +22,8 @@ ResponseBodyModel _$ResponseBodyModelFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$ResponseBodyModelToJson(ResponseBodyModel instance) =>
+Map<String, dynamic> _$TokenResponseBodyModelToJson(
+        TokenResponseBodyModel instance) =>
     <String, dynamic>{
       'result': instance.result,
       'targetUrl': instance.targetUrl,

@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'resultresponse_model.dart';
+part of 'tokenresponse_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ResultResponseModel _$ResultResponseModelFromJson(Map<String, dynamic> json) {
-  return ResultResponseModel(
+TokenResponseModel _$TokenResponseModelFromJson(Map<String, dynamic> json) {
+  return TokenResponseModel(
     accessToken: json['accessToken'] as String?,
     encryptedAccessToken: json['encryptedAccessToken'] as String?,
     expireInSeconds: json['expireInSeconds'] as int?,
@@ -24,8 +24,7 @@ ResultResponseModel _$ResultResponseModelFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$ResultResponseModelToJson(
-        ResultResponseModel instance) =>
+Map<String, dynamic> _$TokenResponseModelToJson(TokenResponseModel instance) =>
     <String, dynamic>{
       'accessToken': instance.accessToken,
       'encryptedAccessToken': instance.encryptedAccessToken,

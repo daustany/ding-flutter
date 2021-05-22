@@ -1,8 +1,7 @@
-import 'package:ding/models/responsebody_model.dart';
+import 'package:ding/models/token/tokenResponsebody_model.dart';
 import 'package:ding/stores/error/error_store.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobx/mobx.dart';
-import 'package:validators/validators.dart';
 
 import '../../data/repository.dart';
 part 'user_store.g.dart';
@@ -54,8 +53,8 @@ abstract class _UserStore with Store {
   }
 
   // empty responses:-----------------------------------------------------------
-  static ObservableFuture<ResponseBodyModel> emptyLoginResponse =
-      ObservableFuture.value(new ResponseBodyModel());
+  static ObservableFuture<TokenResponseBodyModel> emptyLoginResponse =
+      ObservableFuture.value(new TokenResponseBodyModel());
 
   // store variables:-----------------------------------------------------------
   @observable
@@ -65,7 +64,7 @@ abstract class _UserStore with Store {
   String? errorMessage = "";
 
   @observable
-  ObservableFuture<ResponseBodyModel> loginFuture = emptyLoginResponse;
+  ObservableFuture<TokenResponseBodyModel> loginFuture = emptyLoginResponse;
 
   @computed
   bool get isLoading => loginFuture.status == FutureStatus.pending;

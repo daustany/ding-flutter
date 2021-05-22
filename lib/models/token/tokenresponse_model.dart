@@ -1,8 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
-part 'resultresponse_model.g.dart';
+part 'tokenresponse_model.g.dart';
 
 @JsonSerializable()
-class ResultResponseModel {
+class TokenResponseModel {
   String? accessToken;
   String? encryptedAccessToken;
   int? expireInSeconds;
@@ -16,7 +16,7 @@ class ResultResponseModel {
   String? refreshToken;
   int? refreshTokenExpireInSeconds;
 
-  ResultResponseModel({
+  TokenResponseModel({
     this.accessToken,
     this.encryptedAccessToken,
     this.expireInSeconds,
@@ -31,8 +31,8 @@ class ResultResponseModel {
     this.refreshTokenExpireInSeconds,
   });
 
-  factory ResultResponseModel.fromJson(Map<String, dynamic> json) =>
-      _$ResultResponseModelFromJson(json);
+  factory TokenResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$TokenResponseModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ResultResponseModelToJson(this);
+  Map<String, dynamic> toJson() => _$TokenResponseModelToJson(this);
 }

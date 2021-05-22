@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:ding/data/network/constants/endpoints.dart';
 import 'package:ding/data/network/dio_client.dart';
-import 'package:ding/models/responsebody_model.dart';
+import 'package:ding/models/token/tokenResponsebody_model.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
@@ -16,7 +16,7 @@ class TokenAuth {
   TokenAuth(this._dioClient);
 
   /// Returns list of post in response
-  Future<ResponseBodyModel> authenticate(
+  Future<TokenResponseBodyModel> authenticate(
       String tenant, String userNameOrEmailAddress, password) async {
     try {
       final res = await _dioClient.post(
@@ -33,7 +33,7 @@ class TokenAuth {
           },
         ),
       );
-      return ResponseBodyModel.fromJson(res);
+      return TokenResponseBodyModel.fromJson(res);
     } on DioError catch (ex) {
       if (ex.type == DioErrorType.connectTimeout) {
         throw Exception("connection_timeout");

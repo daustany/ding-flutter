@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:ding/data/network/apis/authentication/tokenAuth.dart';
 import 'package:ding/data/sharedpref/shared_preference_helper.dart';
-import 'package:ding/models/responsebody_model.dart';
+import 'package:ding/models/token/tokenResponsebody_model.dart';
 
 class Repository {
   // data source object
@@ -17,7 +17,7 @@ class Repository {
   Repository(this._tokenAuth, this._sharedPrefsHelper);
 
   // Login:---------------------------------------------------------------------
-  Future<ResponseBodyModel> login(
+  Future<TokenResponseBodyModel> login(
     String tenant,
     String username,
     String password,

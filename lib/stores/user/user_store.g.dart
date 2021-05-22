@@ -69,13 +69,13 @@ mixin _$UserStore on _UserStore, Store {
   final _$loginFutureAtom = Atom(name: '_UserStore.loginFuture');
 
   @override
-  ObservableFuture<ResponseBodyModel> get loginFuture {
+  ObservableFuture<TokenResponseBodyModel> get loginFuture {
     _$loginFutureAtom.reportRead();
     return super.loginFuture;
   }
 
   @override
-  set loginFuture(ObservableFuture<ResponseBodyModel> value) {
+  set loginFuture(ObservableFuture<TokenResponseBodyModel> value) {
     _$loginFutureAtom.reportWrite(value, super.loginFuture, () {
       super.loginFuture = value;
     });
