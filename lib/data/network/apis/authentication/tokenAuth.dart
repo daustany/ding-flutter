@@ -22,6 +22,7 @@ class TokenAuth {
       final res = await _dioClient.post(
         Endpoints.authenticate,
         data: {
+          "tenancyName": tenant,
           "userNameOrEmailAddress": userNameOrEmailAddress,
           "password": password,
         },

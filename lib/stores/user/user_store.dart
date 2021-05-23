@@ -71,6 +71,8 @@ abstract class _UserStore with Store {
 
 // store variables:-----------------------------------------------------------
   @observable
+  String? tenantId;
+  @observable
   String tenant = '';
   @observable
   String username = '';
@@ -106,20 +108,27 @@ abstract class _UserStore with Store {
     final future = _repository.login(tenant, username, password);
     loginFuture = ObservableFuture(future);
     await future.then((_response) async {
-      if ((_response.success ?? false)) {
+      print(_response.success);
+
+      if ((_response.success ?? false) && _response.result?.tenantId != null) {
         _repository.saveIsLoggedIn(true);
         _repository.saveAuthToken(
-          "1", //Tenant Id
+          _response.result?.tenantId.toString(),
           _response.result?.accessToken,
           _response.result?.encryptedAccessToken,
           _response.result?.refreshToken,
         );
+        this.tenantId = _response.result?.tenantId.toString();
         this.isLoggedIn = true;
         this.success = true;
       } else {
+        if (_response.result?.tenantId == null && _response.success == true) {
+          this.errorMessage = "شرکت مشخص شده وجود ندارد";
+        } else
+          this.errorMessage = _response.error?.message;
+
         this.isLoggedIn = false;
         this.success = false;
-        this.errorMessage = _response.error?.message;
         _repository.saveIsLoggedIn(false);
         _repository.removeAuthToken();
       }

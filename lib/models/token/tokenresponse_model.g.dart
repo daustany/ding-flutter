@@ -21,6 +21,7 @@ TokenResponseModel _$TokenResponseModelFromJson(Map<String, dynamic> json) {
     returnUrl: json['returnUrl'],
     refreshToken: json['refreshToken'] as String?,
     refreshTokenExpireInSeconds: json['refreshTokenExpireInSeconds'] as int?,
+    tenantId: json['tenantId'] as int?,
   );
 }
 
@@ -38,4 +39,5 @@ Map<String, dynamic> _$TokenResponseModelToJson(TokenResponseModel instance) =>
       'returnUrl': instance.returnUrl,
       'refreshToken': instance.refreshToken,
       'refreshTokenExpireInSeconds': instance.refreshTokenExpireInSeconds,
+      'tenantId': instance.tenantId,
     };

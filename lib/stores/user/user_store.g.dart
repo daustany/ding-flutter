@@ -81,6 +81,21 @@ mixin _$UserStore on _UserStore, Store {
     });
   }
 
+  final _$tenantIdAtom = Atom(name: '_UserStore.tenantId');
+
+  @override
+  String? get tenantId {
+    _$tenantIdAtom.reportRead();
+    return super.tenantId;
+  }
+
+  @override
+  set tenantId(String? value) {
+    _$tenantIdAtom.reportWrite(value, super.tenantId, () {
+      super.tenantId = value;
+    });
+  }
+
   final _$tenantAtom = Atom(name: '_UserStore.tenant');
 
   @override
@@ -274,6 +289,7 @@ mixin _$UserStore on _UserStore, Store {
 success: ${success},
 errorMessage: ${errorMessage},
 loginFuture: ${loginFuture},
+tenantId: ${tenantId},
 tenant: ${tenant},
 username: ${username},
 password: ${password},

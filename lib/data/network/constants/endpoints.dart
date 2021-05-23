@@ -10,5 +10,6 @@ class Endpoints {
   // connectTimeout
   static const int connectionTimeout = 30000;
 
-  static const String authenticate = baseUrl + "/api/TokenAuth/Authenticate";
+  static const String authenticate =
+      baseUrl + "/api/TokenAuth/AuthenticateByTenant";
 }

@@ -15,6 +15,7 @@ class TokenResponseModel {
   dynamic? returnUrl;
   String? refreshToken;
   int? refreshTokenExpireInSeconds;
+  int? tenantId;
 
   TokenResponseModel({
     this.accessToken,
@@ -29,6 +30,7 @@ class TokenResponseModel {
     this.returnUrl,
     this.refreshToken,
     this.refreshTokenExpireInSeconds,
+    this.tenantId,
   });
 
   factory TokenResponseModel.fromJson(Map<String, dynamic> json) =>
